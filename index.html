@@ -48,7 +48,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;line-height:1.6;paddi
  <div class="section-title">☀️ 朝 <span class="hint">優先度順</span></div>
  <div class="card" id="morning"></div>
 
- <div class="section-title">🌙 夜 <span class="hint">ゴミ出しは火曜・日曜</span></div>
+ <div class="section-title">🌙 夜 <span class="hint" id="trashHint">ゴミ出しは火曜・日曜</span></div>
  <div class="card" id="night"></div>
 
  <div class="section-title" id="beerTitle" style="display:none">🍺 ビールを使った日</div>
@@ -119,7 +119,10 @@ function render(){
   if(id==="beer"){root.style.display=state.beerUsed?"block":"none";document.getElementById("beerTitle").style.display=state.beerUsed?"block":"none";if(!state.beerUsed)continue}
   items.forEach(x=>root.append(makeItem(x)));
  }
- if(d.getDay()===0||d.getDay()===2) document.getElementById("night").append(makeItem(["trash","ゴミ出し","今日"]));
+ const decSchedule = d >= new Date(2026,11,1);
+ const trashDays = decSchedule ? [1,5] : [0,2];
+ document.getElementById("trashHint").textContent = decSchedule ? "ゴミ出しは月曜・金曜" : "ゴミ出しは火曜・日曜";
+ if(trashDays.includes(d.getDay())) document.getElementById("night").append(makeItem(["trash","ゴミ出し","今日"]));
  const btn=document.getElementById("beerBtn");btn.classList.toggle("active",state.beerUsed);btn.textContent=state.beerUsed?"🍺 ビール使用あり（タップで解除）":"🍺 ビールを使用した";
  renderCarry();
 }
