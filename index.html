@@ -119,6 +119,7 @@ function render(){
   if(id==="beer"){root.style.display=state.beerUsed?"block":"none";document.getElementById("beerTitle").style.display=state.beerUsed?"block":"none";if(!state.beerUsed)continue}
   items.forEach(x=>root.append(makeItem(x)));
  }
+ if(d.getDay()===6) document.getElementById("morning").append(makeItem(["postbox","1階ポストを確認し、郵便物・荷物を回収する（チラシは処分）","土曜のみ"]));
  const decSchedule = d >= new Date(2026,11,1);
  const trashDays = decSchedule ? [1,5] : [0,2];
  document.getElementById("trashHint").textContent = decSchedule ? "ゴミ出しは月曜・金曜" : "ゴミ出しは火曜・日曜";
